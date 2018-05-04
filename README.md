@@ -1,24 +1,31 @@
-# README
+重要功能
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 文章
 
-Things you may want to cover:
+* 發表文章
+  * 草稿功能
+* 文章分類
+* 文章權限
+  * 公開
+  * 僅限好友
+  * 只有自己
+* 回覆文章
+* 排序功能
+* 收藏文章
 
-* Ruby version
+### 好友
 
-* System dependencies
+* 邀請好友
+* 同意/忽略邀請 
 
-* Configuration
+### 個人
 
-* Database creation
+* 簡介
+* 發表文章列表
+* 回覆列表
 
-* Database initialization
+### 統計
 
-* How to run the test suite
+* 數量統計
+* 文章瀏覽次數
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
