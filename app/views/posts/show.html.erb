@@ -3,3 +3,17 @@
 <%= @post.user.id %><br>
 <%= link_to 'edit', edit_post_path(@post) %><br>
 <%= link_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
+
+<hr>
+<%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
+  <%= f.input :comment, rows: 5  %>
+  <%= f.button :submit %>
+<% end %>
+<hr>
+<% @replies.each do |reply| %>
+<%= reply.comment %><br>
+<%= reply.user.id %><br>
+<%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
+<hr>
+<% end %>
+
