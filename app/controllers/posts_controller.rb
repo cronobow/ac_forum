@@ -17,7 +17,7 @@ class PostsController < ApplicationController
       flash[:notice] = "Successfully saved"
       redirect_to posts_path
     else
-      flash.now[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
+      flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :new
     end
   end

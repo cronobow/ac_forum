@@ -1,0 +1,10 @@
+<%= simple_form_for [:admin, @category], html: { class: 'form-inline' } do |f| %>
+  <%= f.input :name %>
+  <%= f.button :submit %>
+<% end %>
+<hr>
+<% @categories.each do |category| %>
+  Name: <%= category.name %><br>
+  <%= link_to 'delete', admin_category_path(category), method: :delete, data: { confirm: "Are you sure?" } %>
+  <hr>
+<% end %>
