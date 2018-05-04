@@ -1,8 +1,8 @@
-<%= @post.title %><br>
-<%= @post.description %><br>
-<%= @post.user.id %><br>
-<%= link_to 'edit', edit_post_path(@post) %><br>
-<%= link_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
+Name: <%= @post.user.name %><br>
+Title: <%= @post.title %><br>
+Description: <%= @post.description %><br>
+<%= button_to 'edit', edit_post_path(@post) %>
+<%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
 
 <hr>
 <%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
@@ -11,9 +11,9 @@
 <% end %>
 <hr>
 <% @replies.each do |reply| %>
-<%= reply.comment %><br>
-<%= reply.user.id %><br>
-<%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
+Name: <%= reply.user.name %><br>
+Comment: <%= reply.comment %><br>
+<%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
 <hr>
 <% end %>
 

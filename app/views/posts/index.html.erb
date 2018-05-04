@@ -1,10 +1,11 @@
 <%= link_to "New Post", new_post_path %>
 <hr>
 <% @posts.each do |post| %>
-<%= post.title %><br>
-<%= post.description %><br>
-<%= post.user.id %><br>
-<%= link_to 'show', post_path(post) %> <%= link_to 'edit', edit_post_path(post) %><br>
+Name: <%= post.user.name %><br>
+Title: <%= link_to post.title, post_path(post) %><br>
+Description: <%= post.description %><br>
+Draft: <%= post.draft %><br>
+<%= link_to 'edit', edit_post_path(post) %><br>
 <%= link_to 'delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
 <hr>
 <% end %>
