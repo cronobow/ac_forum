@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
     @posts = Post.all
@@ -17,8 +18,7 @@ class PostsController < ApplicationController
       redirect_to posts_path
     else
       flash.now[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
-      @posts = Post.all
-      render :index
+      render :new
     end
   end
 
@@ -29,9 +29,19 @@ class PostsController < ApplicationController
   end
 
   def update
+    if @post.update(post_params)
+      flash[:notice] = "Successfully updated"
+      redirect_to posts_path
+    else
+      flash.now[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
+      render :edit
+    end
   end
 
   def destroy
+    @post.destroy
+    flash[:notice] = "Successfully deleted"
+    redirect_to posts_path
   end
 
   private
@@ -41,7 +51,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title,:description)
+    params.require(:post).permit(:title,:description,:image,:draft)
   end
 
 end
