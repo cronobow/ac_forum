@@ -1,5 +1,6 @@
-<%= simple_form_for @post, html: { class: 'form-inline' } do |f| %>
-  <%= f.input :title %>
-  <%= f.input :description %>
-  <%= f.button :submit %>
+<%= simple_form_for @post, html: { class: 'form-group' } do |f| %>
+  <%= f.input :title, class: 'form-control' %>
+  <%= f.input :description, class: 'form-control' %>
+  <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
+  <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>

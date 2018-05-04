@@ -28,6 +28,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @categories = Category.all
   end
 
   def update
@@ -53,7 +54,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title,:description,:image,:draft)
+    params.require(:post).permit(:title, :description, :image, :draft, :category_ids => [])
   end
 
 end
