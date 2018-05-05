@@ -32,9 +32,7 @@ namespace :dev do
 
   task fake_post_categories: :environment do
     Post.all.each do |post|
-      rand(1..3).times do |i|
-        post.categories << Category.all.sample
-      end
+      post.categories << Category.all.sample(rand(1..3))
     end
     puts "All post have categories"
   end
