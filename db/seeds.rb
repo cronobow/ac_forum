@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#   Generate Admin
 User.create(
   name:'Admin',
   email:'admin@example.com',
@@ -14,3 +16,14 @@ User.create(
   )
 
 puts "Admin was generated!"
+
+#   Generate Categories
+
+categories = ['Ruby','Rails','CSS','HTML','GIT','Javascript']
+
+Category.destroy_all
+
+for i in 0..5
+  Category.create( name: categories[i])
+  puts "Category #{categories[i]} was generated!"
+end

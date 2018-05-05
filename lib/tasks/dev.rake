@@ -12,42 +12,55 @@ namespace :dev do
         )
     end
     puts "create #{User.count} fake users"
-    system('rails db:seed')
   end
 
   task fake_post: :environment do
     Post.destroy_all
     User.all.each do |user|
-      5.times do |i|
+      rand(3..10).times do |i|
         Post.create!(
           title: FFaker::Book.title,
           description: FFaker::Lorem.paragraph,
           user: user,
+          draft: [true, false, false, false].sample,
+          privacy: rand(1..3),
         )
       end
     puts "create #{user.posts.count} #{user.name}'s posts"
     end
   end
 
+  task fake_post_categories: :environment do
+    Post.all.each do |post|
+      rand(1..3).times do |i|
+        post.categories << Category.all.sample
+      end
+    end
+    puts "All post have categories"
+  end
+
   task fake_reply: :environment do
     Reply.destroy_all
-    Post.all.each do |post|
-      5.times do |i|
+    Post.where(draft: false).each do |post|
+      rand(2..10).times do |i|
         Reply.create!(
           comment: FFaker::Lorem.paragraph,
           post: post,
-          user_id: rand(User.first.id.to_i..User.last.id.to_i),
+          user: User.all.sample,
         )
       end
-    puts "Post #{post.id} create 5 replies"
+      puts "Post #{post.id} create #{post.replies.count} replies"
     end
   end
 
   task fake_all: :environment do
-    system 'rails db:reset' if Rails.env == 'development'
+    system 'rails db:drop'
+    system 'rails db:create'
     system 'rails db:migrate'
     system 'rails dev:fake_user'
+    system 'rails db:seed'
     system 'rails dev:fake_post'
+    system 'rails dev:fake_post_categories'
     system 'rails dev:fake_reply'
   end
 end
