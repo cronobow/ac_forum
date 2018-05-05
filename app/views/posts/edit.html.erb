@@ -1,7 +1,13 @@
-<%= simple_form_for @post, html: { class: 'form-group' } do |f| %>
-  <%= f.input :title, class: 'form-control' %>
-  <%= f.input :description, class: 'form-control' %>
-  <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
-  <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
-  <%= f.button :submit, class: 'btn btn-primary' %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <%= simple_form_for @post, html: { class: 'form-group' } do |f| %>
+        <%= f.input :title, class: 'form-control' %>
+        <%= f.input :description, class: 'form-control' %>
+        <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
+        <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

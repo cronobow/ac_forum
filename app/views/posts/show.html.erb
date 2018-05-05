@@ -1,19 +1,26 @@
-Name: <%= @post.user.name %><br>
-Title: <%= @post.title %><br>
-Description: <%= @post.description %><br>
-<%= button_to 'edit', edit_post_path(@post) %>
-<%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      Name: <%= @post.user.name %><br>
+      Title: <%= @post.title %><br>
+      Description: <%= @post.description %><br>
+      <%= button_to 'edit', edit_post_path(@post) %>
+      <%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
 
-<hr>
-<%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
-  <%= f.input :comment, rows: 5  %>
-  <%= f.button :submit %>
-<% end %>
-<hr>
-<% @replies.each do |reply| %>
-Name: <%= reply.user.name %><br>
-Comment: <%= reply.comment %><br>
-<%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
-<hr>
-<% end %>
+      <hr>
+      <%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
+        <%= f.input :comment, rows: 5  %>
+        <%= f.button :submit %>
+      <% end %>
+      <hr>
+      <% @replies.each do |reply| %>
+      Name: <%= reply.user.name %><br>
+      Comment: <%= reply.comment %><br>
+      <%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
+      <hr>
+      <% end %>
+
+    </div>
+  </div>
+</div>
 

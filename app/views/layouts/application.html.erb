@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant-TW">
   <head>
-    <title>AcForum</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Forum</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <%= render 'layouts/navbar' %>
     <%= render 'layouts/notice' %>
+    <div class="mb-5"></div>
     <%= yield %>
   </body>
 </html>
