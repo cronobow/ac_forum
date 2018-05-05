@@ -20,8 +20,13 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-    if @post.save
-      flash[:notice] = "Successfully saved"
+    if @post.save && params[:commit] == 'Published'
+      @post.draft = false
+      @post.save
+      flash[:notice] = '已成功發表'
+      redirect_to posts_path
+    elsif @post.save
+      flash[:notice] = '已建立草稿'
       redirect_to posts_path
     else
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
@@ -40,7 +45,13 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      flash[:notice] = "Successfully updated"
+      if params[:commit] == 'Published' && @post.draft == true
+        @post.draft = false
+        @post.save
+        flash[:notice] = '已成功發表'
+      else
+        flash[:notice] = '文章已更新'
+      end
       redirect_to posts_path
     else
       flash.now[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?

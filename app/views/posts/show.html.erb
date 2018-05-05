@@ -7,19 +7,20 @@
       <%= button_to 'edit', edit_post_path(@post) %>
       <%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
 
-      <hr>
-      <%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
-        <%= f.input :comment, rows: 5  %>
-        <%= f.button :submit %>
+      <% if @post.draft == false  %>
+        <hr>
+        <%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
+          <%= f.input :comment, rows: 5  %>
+          <%= f.button :submit %>
+        <% end %>
+        <hr>
+        <% @replies.each do |reply| %>
+        Name: <%= reply.user.name %><br>
+        Comment: <%= reply.comment %><br>
+        <%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
+        <hr>
+        <% end %>
       <% end %>
-      <hr>
-      <% @replies.each do |reply| %>
-      Name: <%= reply.user.name %><br>
-      Comment: <%= reply.comment %><br>
-      <%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
-      <hr>
-      <% end %>
-
     </div>
   </div>
 </div>

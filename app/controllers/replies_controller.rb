@@ -4,9 +4,13 @@ class RepliesController < ApplicationController
 
 
   def create
-    @reply = @post.replies.build(reply_params)
-    @reply.user = current_user
-    @reply.save
+    if @post.draft == true
+      flash[:alert] = '草稿無法留言'
+    else
+      @reply = @post.replies.build(reply_params)
+      @reply.user = current_user
+      @reply.save
+    end
     redirect_to post_path(@post)
   end
 
