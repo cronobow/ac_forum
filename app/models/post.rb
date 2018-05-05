@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   validates_presence_of [:description, :title]
 
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   has_many :replies
   has_many :post_categoryships
   has_many :categories, through: :post_categoryships
