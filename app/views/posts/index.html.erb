@@ -5,6 +5,7 @@ Name: <%= post.user.name %><br>
 Title: <%= link_to post.title, post_path(post) %><br>
 Description: <%= post.description %><br>
 Draft: <%= post.draft %><br>
+Privacy: <%= post.privacy %><br>
 <%= link_to 'edit', edit_post_path(post) %><br>
 <%= link_to 'delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
 <hr>

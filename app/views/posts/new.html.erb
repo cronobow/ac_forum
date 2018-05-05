@@ -2,5 +2,6 @@
   <%= f.input :title %>
   <%= f.input :description %>
   <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
+  <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
   <%= f.button :submit %>
 <% end %>

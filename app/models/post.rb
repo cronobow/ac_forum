@@ -7,8 +7,8 @@ class Post < ApplicationRecord
   has_many :categories, through: :post_categoryships
 
   enum privacy: {
-    public:      1, # 公開
-    onlyfriend:  2, # 好友限定
-    onlyme:      3, # 僅限自己
+    all_user:      1, # 公開
+    only_friend:  2, # 好友限定
+    only_me:      3, # 僅限自己
   }
 end
