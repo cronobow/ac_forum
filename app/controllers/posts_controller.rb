@@ -4,6 +4,12 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    @categories = Category.all
+    if params[:category].present?
+      @category = params[:category]
+      @posts = Category.find_by(name: params[:category]).posts
+    end
+    @posts = @posts.published.all_user
   end
 
   def new

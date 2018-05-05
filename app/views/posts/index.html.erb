@@ -1,18 +1,25 @@
-<%= link_to "New Post", new_post_path %>
-<hr>
-<% @posts.each do |post| %>
-Name: <%= post.user.name %><br>
-Title: <%= link_to post.title, post_path(post) %><br>
-Description: <%= post.description %><br>
-Draft: <%= post.draft %><br>
-Privacy: <%= post.privacy %><br>
-<%= link_to 'edit', edit_post_path(post) %><br>
-<%= link_to 'delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
-<hr>
-<% end %>
 <div class="container">
   <div class="row">
     <div class="col">
+      <%= link_to 'All', posts_path %>
+      <% @categories.each do |category| %>
+        <%= link_to category.name, posts_path(category: category.name) %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <% @posts.each do |post| %>
+      Name: <%= post.user.name %><br>
+      Title: <%= link_to post.title, post_path(post) %><br>
+      Description: <%= post.description %><br>
+      Category: <%= post.categories.map {|c| c[:name] } %><br>
+      Draft: <%= post.draft %><br>
+      Privacy: <%= post.privacy %><br>
+      <%= link_to 'edit', edit_post_path(post) %><br>
+      <%= link_to 'delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
+      <hr>
+      <% end %>
     </div>
   </div>
 </div>
