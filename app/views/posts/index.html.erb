@@ -1,25 +1,44 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= link_to 'All', posts_path %>
+      <h1>碼農論壇</h1>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <%= link_to 'All', posts_path, class: "btn btn-outline-primary #{'active' if @category.blank? }"  %>
       <% @categories.each do |category| %>
-        <%= link_to category.name, posts_path(category: category.name) %>
+        <%= link_to category.name, posts_path(category: category.name), class: "btn btn-outline-primary ml-2 #{'active' if category.name == @category }" %>
       <% end %>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-3">
     <div class="col">
-      <% @posts.each do |post| %>
-      Name: <%= post.user.name %><br>
-      Title: <%= link_to post.title, post_path(post) %><br>
-      Description: <%= post.description %><br>
-      Category: <%= post.categories.map {|c| c[:name] } %><br>
-      Draft: <%= post.draft %><br>
-      Privacy: <%= post.privacy %><br>
-      <%= link_to 'edit', edit_post_path(post) %><br>
-      <%= link_to 'delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
-      <hr>
-      <% end %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">Replies count</th>
+            <th scope="col">Title</th>
+            <th scope="col">Last replied at</th>
+            <th scope="col">Viewed count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td class="text-center"><%= post.replies_count %></th>
+              <td>
+                <%= link_to post.title, post_path(post) %><br>
+                <% post.categories.each do |category| %>
+                  <%= link_to category.name, posts_path(category: category.name), class: "badge badge-secondary" %>
+                <% end %>
+              </td>
+              <td><%= post.replies.last.created_at.strftime("%Y-%m-%d") if post.replies.present? %></td>
+              <td><%= post.viewed_count %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -1,27 +1,40 @@
 <div class="container">
   <div class="row">
-    <div class="col">
-      Name: <%= @post.user.name %><br>
-      Title: <%= @post.title %><br>
-      Description: <%= @post.description %><br>
+    <div class="col d-flex justify-content-start">
+      <h3><%= @post.title %></h3> <%= link_to 'Collect', edit_post_path(@post), class: "btn btn-outline-warning ml-3" %>
+    </div>
+  </div>
+  <div class="row mt-3 border">
+    <div class="col-3">
+      <%= @post.user.name %>
+    </div>
+    <div class="col-9">
+      <%= @post.description %><br>
       <%= button_to 'edit', edit_post_path(@post) %>
       <%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
-
-      <% if @post.draft == false  %>
-        <hr>
-        <%= simple_form_for [@post, @reply], html: { class: 'form-inline' } do |f| %>
-          <%= f.input :comment, rows: 5  %>
-          <%= f.button :submit %>
-        <% end %>
-        <hr>
-        <% @replies.each do |reply| %>
-        Name: <%= reply.user.name %><br>
-        Comment: <%= reply.comment %><br>
+    </div>
+  </div>
+  <div class="row border">
+    <% @replies.each do |reply| %>
+      <div class="col-3">
+        <%= reply.user.name %>
+      </div>
+      <div class="col-9">
+        <%= reply.comment %><br>
         <%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
-        <hr>
-        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <%= simple_form_for [@post, @reply] do |f| %>
+        <div class="form-group">
+          <%= f.input :comment, rows: 5, class: "form-control"  %>
+        </div>
+        <div class="form-group">
+          <%= f.button :submit, class: "btn btn-primary" %>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
-
