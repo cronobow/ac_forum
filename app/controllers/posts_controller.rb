@@ -3,13 +3,12 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.all
+    @posts = Post.published.all_user
     @categories = Category.all
     if params[:category].present?
       @category = params[:category]
       @posts = Category.find_by(name: params[:category]).posts
     end
-    @posts = @posts.published.all_user
   end
 
   def new
@@ -37,6 +36,8 @@ class PostsController < ApplicationController
   def show
     @reply = Reply.new
     @replies = @post.replies.all
+    @post.viewed_count += 1
+    @post.save
   end
 
   def edit
