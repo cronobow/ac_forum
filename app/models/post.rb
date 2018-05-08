@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   has_many :replies
   has_many :post_categoryships
   has_many :categories, through: :post_categoryships
+  has_many :collects
 
   enum privacy: {
     all_user:     1, # 公開
