@@ -9,5 +9,9 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :replies
+    member do
+      post :collect
+      post :uncollect
+    end
   end
 end

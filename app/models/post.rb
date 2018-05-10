@@ -15,4 +15,8 @@ class Post < ApplicationRecord
 
   scope :published, -> { where( draft: false ) }
 
+  def collected?(user)
+    self.collects.find_by(user: user)
+  end
+
 end

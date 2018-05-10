@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :collect, :uncollect]
 
   def index
     @posts = Post.published.all_user
@@ -55,7 +55,7 @@ class PostsController < ApplicationController
       end
       redirect_to posts_path
     else
-      flash.now[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
+      flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :edit
     end
   end
@@ -64,6 +64,28 @@ class PostsController < ApplicationController
     @post.destroy
     flash[:notice] = "Successfully deleted"
     redirect_to posts_path
+  end
+
+  def collect
+    collect = Collect.new
+    collect.user = current_user
+    collect.post = @post
+    if collect.save
+      flash[:notice] = "Successfully collected"
+    else
+      flash[:alert] = collect.errors.full_messages.to_sentence if collect.errors.any?
+    end
+    redirect_to post_path(@post)
+  end
+
+  def uncollect
+    collect = @post.collects.find_by(user: current_user)
+    if collect.destroy
+      flash[:notice] = "Successfully Uncollect"
+    else
+      flash[:alert] = "Error"
+    end
+    redirect_to post_path(@post)
   end
 
   private
