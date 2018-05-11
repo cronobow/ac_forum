@@ -14,4 +14,12 @@ Rails.application.routes.draw do
       post :uncollect
     end
   end
+
+  resources :users do
+    member do
+      get :show_comment
+      get :show_collect
+      get :show_draft
+    end
+  end
 end
