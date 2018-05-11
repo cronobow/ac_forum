@@ -1,4 +1,16 @@
 <div class="container">
+  <div class="row mt-3">
+    <div class="col">
+      <ul class="nav nav-tabs mb-5">
+        <li class="nav-item">
+          <%= link_to 'Categories List', admin_categories_path, class: "nav-link #{'active' if controller?('admin/categories')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Users List', admin_users_path, class: "nav-link #{'active' if controller?('admin/users')}" %>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="row">
     <div class="col">
       <%= simple_form_for [:admin, @category], html: { class: 'form-inline' } do |f| %>

@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col">
+      <ul class="nav nav-tabs mb-5">
+        <li class="nav-item">
+          <%= link_to 'Categories List', admin_categories_path, class: "nav-link #{'active' if controller?('admin/categories')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Users List', admin_users_path, class: "nav-link #{'active' if controller?('admin/users')}" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td>
+                <%= simple_form_for [:admin, user], html: { class: 'form-inline' } do |f| %>
+                <%= f.input :role, label: false, collection: [:admin, :user], include_blank: false  %>
+                <%= f.button :submit, class: 'btn btn-primary ml-2' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
