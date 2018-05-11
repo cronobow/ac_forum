@@ -12,8 +12,13 @@ class UsersController < ApplicationController
   end
 
   def show_collect
-    @collects = @user.collects
-    render :show
+    if @user == current_user
+      @collects = @user.collect_posts
+      render :show
+    else
+      flash[:alert] = '沒有觀看權限'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def show_draft

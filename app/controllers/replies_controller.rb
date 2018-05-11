@@ -24,7 +24,7 @@ class RepliesController < ApplicationController
   def destroy
     @reply.destroy
     flash[:notice] = "Successfully deleted"
-    redirect_to post_path(@post)
+    redirect_back(fallback_location: root_path)
   end
 
   private

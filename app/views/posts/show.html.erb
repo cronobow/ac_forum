@@ -5,7 +5,7 @@
       <% if @post.collected?(current_user) %>
         <%= button_to 'Uncollect', uncollect_post_path(@post), class: "btn btn-outline-warning ml-3" %>
       <% else %>
-        <%= button_to 'Collect', collect_post_path(@post), class: "btn btn-outline-warning ml-3" %>
+        <%= button_to 'Collect', collect_post_path(@post), class: "btn btn-warning ml-3" %>
       <% end %>
     </div>
   </div>

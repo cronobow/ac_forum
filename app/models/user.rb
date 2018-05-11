@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :replies
   has_many :collects
+  has_many :collect_posts, through: :collects, source: :post
 
   def admin?
     self.role == "admin"

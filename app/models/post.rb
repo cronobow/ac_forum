@@ -2,10 +2,10 @@ class Post < ApplicationRecord
   validates_presence_of [:description, :title]
 
   belongs_to :user, counter_cache: true
-  has_many :replies
-  has_many :post_categoryships
+  has_many :replies, dependent: :destroy
+  has_many :post_categoryships, dependent: :destroy
   has_many :categories, through: :post_categoryships
-  has_many :collects
+  has_many :collects, dependent: :destroy
 
   enum privacy: {
     all_user:     1, # 公開

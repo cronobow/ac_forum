@@ -1,2 +1,28 @@
-<h3>My Comment</h3>
-  <%= @comments.count %>
+<table class="table table-striped ">
+  <thead class="">
+    <tr>
+      <th scope="col" class="text-center">Comment</th>
+      <% if @user == current_user %>
+        <th scope="col">Action</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td>
+          <%= link_to comment.post.title, post_path(comment.post) %><br>
+          <div calss="border">
+            <%= comment.comment %>
+          </div>
+        </td>
+        <% if @user == current_user %>
+          <td>
+            <%= link_to 'Edit', post_path(comment.post), class: "btn btn-primary" %>
+            <%= link_to 'delete', post_reply_path(comment.post, comment ),method: :delete, class: "btn btn-primary" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

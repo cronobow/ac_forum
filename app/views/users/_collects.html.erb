@@ -1,2 +1,18 @@
-<h3>My Collect</h3>
-  <%= @collects.count %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collects.each do |post| %>
+      <tr>
+        <td>
+          <%= link_to post.title, post_path(post) %><br>
+        </td>
+        <td><%= button_to 'Uncollect', uncollect_post_path(post), class: "btn btn-outline-warning"  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

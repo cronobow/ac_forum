@@ -53,7 +53,7 @@ class PostsController < ApplicationController
       else
         flash[:notice] = '文章已更新'
       end
-      redirect_to posts_path
+      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :edit
@@ -63,7 +63,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:notice] = "Successfully deleted"
-    redirect_to posts_path
+    redirect_back(fallback_location: root_path)
   end
 
   def collect
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
     else
       flash[:alert] = collect.errors.full_messages.to_sentence if collect.errors.any?
     end
-    redirect_to post_path(@post)
+    redirect_back(fallback_location: root_path)
   end
 
   def uncollect
@@ -85,7 +85,7 @@ class PostsController < ApplicationController
     else
       flash[:alert] = "Error"
     end
-    redirect_to post_path(@post)
+    redirect_back(fallback_location: root_path)
   end
 
   private
