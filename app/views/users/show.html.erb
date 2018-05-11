@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row mt-3 border">
+    <div class="col-3">
+      <%= @user.name %>
+    </div>
+    <div class="col-9">
+      <%= @user.description %><br>
+      <%= button_to 'edit', edit_user_path(@user) %>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <%= link_to 'My Post', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Commment', show_comment_user_path(@user), class: "nav-link #{'active' if action?('show_comment')} " %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Collect', show_collect_user_path(@user), class: "nav-link #{'active' if action?('show_collect')} " %>
+        </li>
+        <% if @user == current_user %>
+          <li class="nav-item">
+            <%= link_to 'My Darft', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My Friend</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <% if action?('show_comment') %>
+        <%= render( partial: 'comments' ) %>
+      <% elsif action?('show_collect') %>
+        <%= render( partial: 'collects' ) %>
+      <% elsif action?('show_draft') %>
+        <%= render( partial: 'drafts' ) %>
+      <% else %>
+        <%= render( partial: 'posts' ) %>
+      <% end %>
+    </div>
+  </div>
+</div>

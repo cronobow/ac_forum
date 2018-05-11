@@ -11,7 +11,7 @@
   </div>
   <div class="row mt-3 border">
     <div class="col-3">
-      <%= @post.user.name %>
+      <%= link_to @post.user.name, user_path(@post.user) %>
     </div>
     <div class="col-9">
       <%= @post.description %><br>

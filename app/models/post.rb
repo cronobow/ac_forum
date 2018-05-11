@@ -14,6 +14,8 @@ class Post < ApplicationRecord
   }
 
   scope :published, -> { where( draft: false ) }
+  scope :draft, -> { where( draft: true ) }
+
 
   def collected?(user)
     self.collects.find_by(user: user)
