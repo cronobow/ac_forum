@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::BaseController
   def index
     @users = User.all
   end
@@ -6,7 +6,11 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
-    @user.save!
+    if @user.save
+      flash[:notice] = 'User updated'
+    else
+      flash[:alert] = 'Error'
+    end
     redirect_back(fallback_location: root_path)
   end
 
