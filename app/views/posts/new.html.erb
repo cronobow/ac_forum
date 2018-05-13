@@ -4,6 +4,7 @@
       <%= simple_form_for @post do |f| %>
         <%= f.input :title %>
         <%= f.input :description %>
+        <%= f.input :image, as: :file, class: 'form-control' %>
         <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
         <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
         <%= f.button :submit, 'Save Draft', class: 'btn btn-primary', name: 'commit'%>

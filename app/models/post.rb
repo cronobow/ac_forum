@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
   validates_presence_of [:description, :title]
+  mount_uploader :image, PostimageUploader
+
 
   belongs_to :user, counter_cache: true
   has_many :replies, dependent: :destroy

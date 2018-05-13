@@ -26,7 +26,7 @@ class PostsController < ApplicationController
       redirect_to posts_path
     elsif @post.save
       flash[:notice] = '已建立草稿'
-      redirect_to posts_path
+      redirect_to edit_post_path(@post)
     else
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :new
@@ -50,10 +50,11 @@ class PostsController < ApplicationController
         @post.draft = false
         @post.save
         flash[:notice] = '已成功發表'
+        redirect_back(fallback_location: root_path)
       else
         flash[:notice] = '文章已更新'
+        redirect_to edit_post_path(@post)
       end
-      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :edit

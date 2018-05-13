@@ -1,9 +1,25 @@
 class UsersController < ApplicationController
   before_action :set_user
 
-
   def show
     @posts = @user.posts.published
+  end
+
+  def edit
+    unless @user == current_user
+      flash[:alert] = '沒有權限'
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def update
+    if @user.update(user_params)
+      flash[:notice] = "Successfully updated"
+      redirect_back(fallback_location: root_path)
+    else
+      flash.now[:alert] = @user.errors.full_messages.to_sentence if @user.errors.any?
+      render :edit
+    end
   end
 
   def show_comment
@@ -16,7 +32,7 @@ class UsersController < ApplicationController
       @collects = @user.collect_posts
       render :show
     else
-      flash[:alert] = '沒有觀看權限'
+      flash[:alert] = '沒有權限'
       redirect_back(fallback_location: root_path)
     end
   end

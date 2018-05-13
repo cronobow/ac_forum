@@ -18,17 +18,18 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <% if current_user&.admin? %>
-          <%= link_to 'Admin Panel', admin_categories_path, class: "btn btn-outline-primary my-2 my-sm-0" %>
+          <%= link_to 'Admin Panel', admin_categories_path, class: "btn btn-outline-primary my-2 my-sm-0 " %>
         <% end %>
         <% if current_user %>
           <% if current_user.avatar? %>
-            <%= link_to tweets_user_path(current_user) do %>
-              <%= image_tag current_user.avatar, width: '40px' ,heitht: '40px', class: "" %>
+            <%= link_to user_path(current_user) do %>
+              <%= image_tag current_user.avatar, width: '40px' ,heitht: '40px', class: "ml-3" %>
             <% end %>
           <% end %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= current_user.name %></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to('修改個人資訊', edit_user_path(current_user), class: "dropdown-item") %>
               <%= link_to('修改密碼', edit_user_registration_path, class: "dropdown-item") %>
             </div>
           </li>

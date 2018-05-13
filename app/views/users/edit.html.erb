@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <% if @user.avatar? %>
+      <div class="col-4 text-center">
+        <%= link_to user_path(@user) do %>
+          <%= image_tag @user.avatar, width: '200px' ,heitht: '200px', class: "ml-3" %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="col-8">
+      <%= simple_form_for @user, html: { class: 'form-group' } do |f| %>
+        <%= f.input :name, class: 'form-control' %>
+        <%= f.input :description, class: 'form-control' %>
+        <%= f.input :avatar, as: :file , class: 'form-control' %>
+        <%= f.button :submit, class: 'btn btn-primary'%>
+      <% end %>
+    </div>
+  </div>
+</div>

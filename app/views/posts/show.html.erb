@@ -9,32 +9,42 @@
       <% end %>
     </div>
   </div>
-  <div class="row mt-3 border">
-    <div class="col-3">
-      <%= link_to @post.user.name, user_path(@post.user) %>
+  <div class="row mt-3">
+    <div class="col-3 text-center py-3 border">
+      <%= render partial: "shared/user_info", locals: {user: @post.user} %>
     </div>
-    <div class="col-9">
-      <%= @post.description %><br>
-      <%= button_to 'edit', edit_post_path(@post) %>
-      <%= button_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }%>
+    <div class="col-9 py-3 border">
+      <% if @post.image.present? %>
+        <div class="row">
+          <div class="col my-3">
+            <%= image_tag @post.image, class: "img-fluid" %>
+          </div>
+        </div>
+      <% end %>
+      <%= @post.description %>
+      <div class="text-right mt-3">
+        <%= link_to 'edit', edit_post_path(@post), class: "btn btn-primary"  %>
+        <%= link_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+      </div>
     </div>
   </div>
-  <div class="row border">
+  <div class="row bg-light mb-5">
     <% @replies.each do |reply| %>
-      <div class="col-3">
-        <%= reply.user.name %>
+      <div class="col-3 text-center py-3 border">
+        <%= render partial: "shared/user_info", locals: {user: reply.user} %>
       </div>
-      <div class="col-9">
-        <%= reply.comment %><br>
-        <%= button_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" } %>
+      <div class="col-9 py-3 border">
+        <%= reply.comment %>
+        <div class="text-right mt-3">
+          <%= link_to 'edit', edit_post_reply_path(@post, reply), class: "btn btn-primary" if reply.user == current_user %>
+          <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        </div>
       </div>
     <% end %>
-  </div>
-  <div class="row mt-3">
-    <div class="col">
+    <div class="col-12 py-3 border">
       <%= simple_form_for [@post, @reply] do |f| %>
         <div class="form-group">
-          <%= f.input :comment, rows: 5, class: "form-control"  %>
+          <%= f.input :comment, input_html: {rows: 5}, class: "form-control"  %>
         </div>
         <div class="form-group">
           <%= f.button :submit, class: "btn btn-primary" %>

@@ -1,0 +1,6 @@
+<% if user.avatar? %>
+  <%= link_to user_path(user) do %>
+    <%= image_tag user.avatar, width: '100px' ,heitht: '100px', class: "mb-3 img-fluid" %><br>
+  <% end %>
+<% end %>
+<%= link_to user.name, user_path(user) %>
