@@ -2,6 +2,14 @@ class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   before_action :set_post, only: [:show, :edit, :update, :destroy, :collect, :uncollect]
 
+  def feeds
+    @user_count = User.all.count
+    @post_count = Post.all.count
+    @reply_count = Reply.all.count
+    @chatter_user = User.order(replies_count: :desc).limit(10)
+    @popular_post = Post.order(replies_count: :desc).limit(10)
+  end
+
   def index
     @posts = Post.published.all_user
     @categories = Category.all
