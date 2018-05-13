@@ -7,12 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #   Generate Admin
+file = File.open("#{Rails.root}/public/avatar/dora.png")
+
 User.create(
   name:'Admin',
   email:'admin@example.com',
   password:'12345678',
   role:'admin',
-  description:'I am Admin'
+  description:'I am Admin',
+  avatar: file,
   )
 
 puts "Admin was generated!"

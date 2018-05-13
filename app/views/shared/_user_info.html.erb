@@ -1,6 +1,11 @@
 <% if user.avatar? %>
   <%= link_to user_path(user) do %>
-    <%= image_tag user.avatar, width: '100px' ,heitht: '100px', class: "mb-3 img-fluid" %><br>
+    <%= image_tag user.avatar, width: '100px' ,heitht: '100px', class: "mb-3 img-fluid" %>
   <% end %>
 <% end %>
-<%= link_to user.name, user_path(user) %>
+<div>
+  <%= link_to user.name, user_path(user) %>
+</div>
+<div>
+  <%= button_to 'Add Friend', user_path(user), class: "btn btn-outline-info mt-3" %>
+</div>
