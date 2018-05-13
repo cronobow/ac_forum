@@ -15,12 +15,37 @@ class Post < ApplicationRecord
     only_me:      3, # 僅限自己
   }
 
-  scope :published, -> { where( draft: false ) }
-  scope :draft, -> { where( draft: true ) }
+  scope :published, -> {
+    where( draft: false )
+  }
+
+  scope :draft, -> {
+    where( draft: true )
+  }
+
+  scope :friend_post, -> (user){
+    frienders = user.frienders.where('friendships.invite = ?', 'accept')
+    only_friend.where('user_id in (?)', frienders.map{|x|x.id})
+  }
 
 
   def collected?(user)
     self.collects.find_by(user: user)
+  end
+
+  def can_view_by?(user)
+
+    if self.draft && self.user == user
+      return true
+    elsif self.privacy == 'only_me' && self.user == user
+      return true
+    elsif self.privacy == 'all_user' && !self.draft
+      return true
+    elsif self.privacy == 'only_friend'
+      self.user.friends.where('friendships.invite = ?', 'accept').include?(user)
+    else
+      return false
+    end
   end
 
 end

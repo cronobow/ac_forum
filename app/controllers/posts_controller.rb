@@ -11,7 +11,12 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.published.all_user
+    if current_user
+      @posts = Post.published.all_user.or(current_user.posts.published.only_me).or(Post.published.friend_post(current_user) )
+    else
+      @posts = Post.published.all_user
+    end
+
     @categories = Category.all
     if params[:category].present?
       @category = params[:category]
@@ -42,14 +47,24 @@ class PostsController < ApplicationController
   end
 
   def show
-    @reply = Reply.new
-    @replies = @post.replies.all
-    @post.viewed_count += 1
-    @post.save
+    if @post.can_view_by?(current_user)
+      @reply = Reply.new
+      @replies = @post.replies.all
+      @post.viewed_count += 1
+      @post.save
+    else
+      flash[:alert] = '沒有權限'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def edit
-    @categories = Category.all
+    if @post.user == current_user
+      @categories = Category.all
+    else
+      flash[:alert] = '沒有權限'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def update
@@ -70,9 +85,14 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-    flash[:notice] = "Successfully deleted"
-    redirect_back(fallback_location: root_path)
+    if @post.user == current_user || current_user.admin?
+      @post.destroy
+      flash[:notice] = "Successfully deleted"
+      redirect_to posts_path
+    else
+      flash[:alert] = '沒有權限'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def collect

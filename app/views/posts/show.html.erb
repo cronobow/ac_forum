@@ -23,8 +23,8 @@
       <% end %>
       <%= @post.description %>
       <div class="text-right mt-3">
-        <%= link_to 'edit', edit_post_path(@post), class: "btn btn-primary"  %>
-        <%= link_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        <%= link_to 'edit', edit_post_path(@post), class: "btn btn-primary" if @post.user == current_user %>
+        <%= link_to 'delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" if @post.user == current_user || current_user.admin? %>
       </div>
     </div>
   </div>
@@ -36,8 +36,10 @@
       <div class="col-9 py-3 border">
         <%= reply.comment %>
         <div class="text-right mt-3">
-          <%= link_to 'edit', edit_post_reply_path(@post, reply), class: "btn btn-primary" if reply.user == current_user %>
-          <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <% if reply.user == current_user  %>
+            <%= link_to 'edit', edit_post_reply_path(@post, reply), class: "btn btn-primary" %>
+            <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <% end %>
         </div>
       </div>
     <% end %>

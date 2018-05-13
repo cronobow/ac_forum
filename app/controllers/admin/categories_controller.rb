@@ -1,5 +1,5 @@
 class Admin::CategoriesController < Admin::BaseController
-  before_action :set_category, only: [:destroy]
+  before_action :set_category, except: [:index, :create]
 
   def index
     @category = Category.new
@@ -16,10 +16,27 @@ class Admin::CategoriesController < Admin::BaseController
     redirect_to admin_categories_path
   end
 
+  def edit
+  end
+
+  def update
+    if @category.update(category_params)
+      flash[:notice] = '分類已更新'
+      redirect_to admin_categories_path
+    else
+      flash[:alert] = @category.errors.full_messages.to_sentence if @category.errors.any?
+      render :edit
+    end
+  end
+
   def destroy
-    @category.destroy
-    flash[:notice] = "Successfully deleted"
-    redirect_to admin_categories_path
+    if @category.destroy
+      flash[:notice] = "Successfully deleted"
+      redirect_to admin_categories_path
+    else
+      flash[:alert] = "無法刪除"
+      redirect_to admin_categories_path
+    end
   end
 
   private
