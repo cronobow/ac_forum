@@ -18,4 +18,9 @@ class User < ApplicationRecord
   def admin?
     self.role == "admin"
   end
+
+  def friend_state(user)
+    friendship = self.friendships.find_by(friend_id: user)
+    friendship.invite if friendship.present?
+  end
 end

@@ -68,9 +68,7 @@ class PostsController < ApplicationController
   end
 
   def collect
-    collect = Collect.new
-    collect.user = current_user
-    collect.post = @post
+    collect = Collect.create(user: current_user, post: @post)
     if collect.save
       flash[:notice] = "Successfully collected"
     else

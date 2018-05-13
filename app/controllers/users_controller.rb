@@ -47,6 +47,55 @@ class UsersController < ApplicationController
     end
   end
 
+  def show_friend
+    if @user == current_user
+      @waiting_friends = current_user.friends.where.not('friendships.invite = ?', 'accept')
+      @invitee_friends = current_user.frienders.where('friendships.invite = ?', 'pending')
+      @friends = current_user.friends.where('friendships.invite = ?', 'accept')
+      render :show
+    else
+      flash[:alert] = '沒有觀看權限'
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def invite_friend
+    if @user == current_user
+      flash[:alert] = '無法邀請自己'
+      redirect_back(fallback_location: root_path)
+    else
+      friendship = Friendship.create(user: current_user, friend: @user)
+      if friendship.save
+        flash[:notice] = "已送出邀請"
+        redirect_back(fallback_location: root_path)
+      else
+        flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+      end
+    end
+  end
+
+  def accept_friend
+    friendship = Friendship.find_by(user: @user , friend: current_user)
+    friendship.invite = 'accept'
+    if friendship.save
+      flash[:notice] = "已同意邀請"
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+    end
+  end
+
+  def ignore_friend
+    friendship = Friendship.find_by(user: @user, friend: current_user)
+    friendship.invite = 'ignore'
+    if friendship.save
+      flash[:notice] = "已忽略邀請"
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+    end
+  end
+
   private
 
   def set_user

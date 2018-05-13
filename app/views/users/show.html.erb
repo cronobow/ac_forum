@@ -1,11 +1,13 @@
 <div class="container">
-  <div class="row mt-3 border">
-    <div class="col-3">
-      <%= @user.name %>
+  <div class="row mt-3">
+    <div class="col-3 text-center py-3 border">
+      <%= render partial: "shared/user_info", locals: {user: @user} %>
     </div>
-    <div class="col-9">
-      <%= @user.description %><br>
-      <%= link_to 'edit', edit_user_path(@user) %>
+    <div class="col-9 py-3 border">
+      <%= @user.description %>
+      <div class="text-right mt-3">
+        <%= link_to 'edit', edit_user_path(@user), class: "btn btn-primary"  %>
+      </div>
     </div>
   </div>
   <div class="row mt-3">
@@ -25,7 +27,7 @@
             <%= link_to 'My Darft', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Friend</a>
+            <%= link_to 'My Friend', show_friend_user_path(@user), class: "nav-link #{'active' if action?('show_friend')} " %>
           </li>
         <% end %>
       </ul>
@@ -39,6 +41,8 @@
         <%= render( partial: 'collects' ) %>
       <% elsif action?('show_draft') %>
         <%= render( partial: 'drafts' ) %>
+      <% elsif action?('show_friend') %>
+        <%= render( partial: 'friends' ) %>
       <% else %>
         <%= render( partial: 'posts' ) %>
       <% end %>

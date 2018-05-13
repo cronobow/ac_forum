@@ -22,6 +22,10 @@ Rails.application.routes.draw do
       get :show_comment
       get :show_collect
       get :show_draft
+      get :show_friend
+      post :invite_friend
+      post :accept_friend
+      post :ignore_friend
     end
   end
 end
