@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">編輯回覆</div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <%= simple_form_for [@post, @reply] do |f| %>
+              <div class="form-group">
+                <%= f.input :comment, input_html: {rows: 5}, class: "form-control"  %>
+              </div>
+              <div class="form-group">
+                <%= f.button :submit, class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

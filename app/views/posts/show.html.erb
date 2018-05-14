@@ -35,7 +35,7 @@
         <%= reply.comment %>
         <div class="text-right mt-3">
           <% if reply.user == current_user  %>
-            <%= link_to 'edit', edit_post_reply_path(@post, reply), class: "btn btn-primary" %>
+            <%= link_to 'edit', edit_post_reply_path(@post, reply), remote: true, class: "btn btn-primary" %>
             <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
           <% end %>
         </div>
