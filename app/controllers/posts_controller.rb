@@ -102,8 +102,12 @@ class PostsController < ApplicationController
       flash[:notice] = "Successfully collected"
     else
       flash[:alert] = collect.errors.full_messages.to_sentence if collect.errors.any?
+      redirect_back(fallback_location: root_path)
     end
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def uncollect
@@ -112,8 +116,13 @@ class PostsController < ApplicationController
       flash[:notice] = "Successfully Uncollect"
     else
       flash[:alert] = "Error"
+      redirect_back(fallback_location: root_path)
     end
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.js
+    end
   end
 
   private

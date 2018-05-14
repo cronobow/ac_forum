@@ -67,10 +67,14 @@ class UsersController < ApplicationController
       friendship = Friendship.create(user: current_user, friend: @user)
       if friendship.save
         flash[:notice] = "已送出邀請"
-        redirect_back(fallback_location: root_path)
       else
         flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
       end
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
