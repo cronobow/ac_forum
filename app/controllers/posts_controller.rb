@@ -20,7 +20,8 @@ class PostsController < ApplicationController
     @categories = Category.all
     if params[:category].present?
       @category = params[:category]
-      @posts = Category.find_by(name: params[:category]).posts
+      @posts = @posts.joins(:categories).where('categories.name = ?', @category)
+      #@posts = Category.find_by(name: params[:category]).posts
     end
   end
 

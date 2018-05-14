@@ -14,9 +14,10 @@
   </div>
   <div class="row mt-3">
     <div class="col">
-      <table class="table table-striped">
+      <table class="table table-striped" id="postlist">
         <thead>
           <tr>
+            <th scope="col" class="text-center">Post ID</th>
             <th scope="col" class="text-center">Replies count</th>
             <th scope="col">Title</th>
             <th scope="col">Last replied at</th>
@@ -26,6 +27,7 @@
         <tbody>
           <% @posts.each do |post| %>
             <tr>
+              <td class="text-center"><%= post.id %></th>
               <td class="text-center"><%= post.replies_count %></th>
               <td>
                 <%= link_to post.title, post_path(post) %><br>
@@ -33,7 +35,7 @@
                   <%= link_to category.name, posts_path(category: category.name), class: "badge badge-secondary" %>
                 <% end %>
               </td>
-              <td><%= post.replies.last.created_at.strftime("%Y-%m-%d") if post.replies.present? %></td>
+              <td><%= post.replies.last.created_at.strftime("%Y-%m-%d %H:%M:%S") if post.replies.present? %></td>
               <td><%= post.viewed_count %></td>
             </tr>
           <% end %>
@@ -42,3 +44,15 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#postlist').DataTable({
+      "searching": false,
+      "lengthChange": false,
+      "pageLength": 20,
+    });
+} );
+</script>
+
+
