@@ -73,7 +73,6 @@ class UsersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
       format.js
     end
   end
@@ -82,10 +81,15 @@ class UsersController < ApplicationController
     friendship = Friendship.find_by(user: @user , friend: current_user)
     friendship.invite = 'accept'
     if friendship.save
+      @invitee_friends = current_user.frienders.where('friendships.invite = ?', 'pending')
       flash[:notice] = "已同意邀請"
-      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+      redirect_back(fallback_location: root_path)
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -93,10 +97,15 @@ class UsersController < ApplicationController
     friendship = Friendship.find_by(user: @user, friend: current_user)
     friendship.invite = 'ignore'
     if friendship.save
+      @invitee_friends = current_user.frienders.where('friendships.invite = ?', 'pending')
       flash[:notice] = "已忽略邀請"
-      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+      redirect_back(fallback_location: root_path)
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 

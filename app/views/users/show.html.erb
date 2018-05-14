@@ -42,7 +42,9 @@
       <% elsif action?('show_draft') %>
         <%= render( partial: 'drafts' ) %>
       <% elsif action?('show_friend') %>
-        <%= render( partial: 'friends' ) %>
+        <div id="friends_waiting"><%= render( partial: 'friends_waiting' ) %></div>
+        <div id="friends_requesting"><%= render( partial: 'friends_requesting' ) %></div>
+        <div id="friends"><%= render( partial: 'friends' ) %></div>
       <% else %>
         <%= render( partial: 'posts' ) %>
       <% end %>

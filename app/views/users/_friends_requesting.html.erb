@@ -1,0 +1,10 @@
+<div class="row p-3 mt-3 bg-light">
+  <h5 class="col-12 text-center m-3">Friend Requests</h5>
+  <% @invitee_friends.each do |user| %>
+    <div class="col-2 my-3 text-center">
+     <%= render partial: "shared/friend_info", locals: {user: user} %>
+     <%= button_to 'Accept', accept_friend_user_path(user), remote: true, class: "btn btn-outline-info mt-3" %>
+     <%= button_to 'Ignore', ignore_friend_user_path(user), remote: true, class: "btn btn-outline-info mt-3" %>
+    </div>
+  <% end %>
+</div>
