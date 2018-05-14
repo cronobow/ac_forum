@@ -1,0 +1,29 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">編輯文章</div>
+    <div class="modal-body">
+      <div class="container">
+        <% if @post.image.present? %>
+          <div class="row">
+            <div class="col mb-3">
+              <%= image_tag @post.image, class: "img-fluid" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="col">
+            <%= simple_form_for @post, html: { class: 'form-group' } do |f| %>
+              <%= f.input :title, class: 'form-control' %>
+              <%= f.input :description, class: 'form-control' %>
+              <%= f.input :image, as: :file, class: 'form-control' %>
+              <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: { multiple: true } %>
+              <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
+              <%= f.button :submit, 'Save Draft', class: 'btn btn-primary', name: 'commit' if @post.draft == true %>
+              <%= f.button :submit, 'Published', class: 'btn btn-primary', name: 'commit'%>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

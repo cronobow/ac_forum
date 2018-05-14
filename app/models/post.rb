@@ -35,7 +35,9 @@ class Post < ApplicationRecord
 
   def can_view_by?(user)
 
-    if self.draft && self.user == user
+    if self.user == user
+      return true
+    elsif self.draft && self.user == user
       return true
     elsif self.privacy == 'only_me' && self.user == user
       return true
