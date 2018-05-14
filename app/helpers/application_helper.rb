@@ -15,7 +15,7 @@ module ApplicationHelper
     elsif current_user.friend_state(user) == 'accept'
       content_tag(:span, 'Your Friend' , class: "btn btn-info disabled mt-3")
     else
-      content_tag(:span, 'Weating...' , class: "btn btn-outline-info disabled mt-3")
+      content_tag(:span, 'Waiting...' , class: "btn btn-outline-info disabled mt-3")
     end
   end
 end

@@ -6,7 +6,7 @@
     <div class="col-9 py-3 border">
       <%= @user.description %>
       <div class="text-right mt-3">
-        <%= link_to 'edit', edit_user_path(@user), class: "btn btn-primary"  %>
+        <%= link_to 'edit', edit_user_path(@user), class: "btn btn-primary" if @user == current_user %>
       </div>
     </div>
   </div>
